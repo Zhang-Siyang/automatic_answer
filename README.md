@@ -7,13 +7,13 @@ Tampermonkey 是一款免费的浏览器扩展和最为流行的用户脚本管�
 油猴脚本管理器网址：http://tampermonkey.net/
 
 
-也可直接下载crx文件安装：
+不能访问外网的话，可直接下载crx文件安装：
 http://shichengcn.me/party_building_automatic_answer/Tampermonkey_v4.5.crx
 （谷歌浏览器需要自己拖动crx文件到扩展程序页面，其他浏览器可以直接安装）
 ## 2.安装自动答题脚本
-安装完油猴脚本管理器，用浏览器打开网址，自动弹出脚本安装界面，安装即可。
+安装完油猴脚本管理器，用浏览器打开网址，自动弹出脚本安装界面，点安装即可。
 http://shichengcn.me/party_building_automatic_answer/党的19大精神学习竞赛答题助手.user.js
 ## 3.使用方式
 直接打开答题网站：http://xxjs.dtdjzx.gov.cn
 
-点击正式答题之后，程序即自动填写。
+点击正式答题之后，程序即自动填写。enjoy！
