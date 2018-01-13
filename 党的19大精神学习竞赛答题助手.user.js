@@ -4,14 +4,14 @@
 // @match          *://xxjs.dtdjzx.gov.cn/kaishijingsai*
 // @namespace      https://github.com/shichengcn/shichengcn.github.io/tree/master/party_building_automatic_answer
 // @version        0.1
-// @description    [答题助手][自动答题][给雪晴写的程序]
+// @description    [答题助手][自动答题]
 // @license        MIT
 // @supportURL     https://github.com/shichengcn/shichengcn.github.io/issues
 // @date           01/11/2018
 // @modified       01/12/2018
 // ==/UserScript==
 
-var daoshushjian = 120; //设置交卷的等待时间     可以自己改哟，不想等就改成0
+var daoshushjian = 120; 
 
 function daan(){
     ajax2('game_info/lookBackSubject',{roundOnlyId:roundOnlyId});
@@ -90,9 +90,6 @@ function daojishi(){
 	mytime++;
 	if(parseInt(mytime)< parseInt(daoshushjian)){
 		$(".W_jiaoquancol")["0"].innerText = "交卷倒计时:" + (parseInt(daoshushjian) - parseInt(mytime)) + "秒";
-        if(parseInt(daoshushjian) == 10){
-            $('.W_time')["0"].innerText =  $('.W_time')["0"].innerText +" 我留下了"+ daoshushjian +"秒的等待时间，时间太短被人发现就不好了，你也可以取消这个时间， (=^_^=)      ---->";
-        }
          $('.jiaojuanss').addClass('W_jiaoquancol');
 	}else{
         if( w_nowNum == w_total-1){
