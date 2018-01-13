@@ -17,4 +17,4 @@ http://shichengcn.me/party_building_automatic_answer/党的19大精神学习竞�
 ## 第三步、开始使用
 直接打开答题网站：http://xxjs.dtdjzx.gov.cn
 
-点击正式答题之后，程序即自动填写。enjoy！
+点击正式答题之后，答案瞬间自动填写。enjoy！
