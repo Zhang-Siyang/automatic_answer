@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           答题助手
+// @name           党的19大精神学习竞赛答题助手
 // @author         石头
 // @match          *://xxjs.dtdjzx.gov.cn/kaishijingsai*
 // @namespace      https://github.com/shichengcn/shichengcn.github.io/tree/master/party_building_automatic_answer
