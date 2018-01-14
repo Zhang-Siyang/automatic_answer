@@ -15,6 +15,6 @@ http://shichengcn.me/party_building_automatic_answer/Tampermonkey_v4.5.crx
 安装完油猴脚本管理器，用浏览器打开下面的地址，自动弹出脚本安装界面，点安装即可。
 http://shichengcn.me/party_building_automatic_answer/答题助手.user.js
 ## 第三步、开始使用
-直接打开答题网站：http://xxjs.dtdjzx.gov.cn
+直接打开答题网站：灯塔 党建在线 党的十九大精神学习竞赛  http://xxjs.dtdjzx.gov.cn
 
 点击正式答题之后，答案瞬间自动填写。enjoy！
