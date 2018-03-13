@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           党的19大精神学习竞赛答题助手
-// @author         石头
+// @author         石成
 // @match          *xxjs.dtdjzx.gov.cn/kaishijingsai*
 // @namespace      https://github.com/shichengcn/automatic_answer
 // @version        0.2
