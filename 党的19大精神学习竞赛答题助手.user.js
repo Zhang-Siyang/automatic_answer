@@ -1,115 +1,144 @@
 // ==UserScript==
 // @name           党的19大精神学习竞赛答题助手
 // @author         石头
-// @match          *://xxjs.dtdjzx.gov.cn/kaishijingsai*
-// @namespace      https://github.com/shichengcn/shichengcn.github.io/tree/master/party_building_automatic_answer
-// @version        0.1
+// @match          *xxjs.dtdjzx.gov.cn/kaishijingsai*
+// @namespace      https://github.com/shichengcn/automatic_answer
+// @version        0.2
 // @description    [答题助手][自动答题]
 // @license        MIT
-// @supportURL     https://github.com/shichengcn/shichengcn.github.io/issues
+// @supportURL     https://github.com/shichengcn/automatic_answer/issues
 // @date           01/11/2018
-// @modified       01/12/2018
+// @modified       03/13/2018
 // ==/UserScript==
 
-var daoshushjian = 120; 
+var daoshushjian = 180;
 
 function daan(){
-    ajax2('game_info/lookBackSubject',{roundOnlyId:roundOnlyId});
-	$.ajax({
-          async:false ,
-          type: "post",
-          url:oUrls+'game_info/lookBackSubject',
-          data:{roundOnlyId:roundOnlyId},
-          dataType: "json",
-          success: function(data) {
-              ubjectInfoList=[];
-              //console.log(w_total);
-              console.log(data);
-              for(var i=0; i<w_total;i++){
-                  w_jjson={};
-                  //w_jjson.id=$('[name="ra_'+i+'"]:checked').attr('ids');
-                  //w_jjson.answer=$('[name="ra_'+i+'"]:checked').val();
-                  w_jjson.id = data.data.dateList[i].subjectId;
-                  w_jjson.answer = data.data.dateList[i].answer;
-                  subjectInfoList.push(w_jjson);
-              }
-              localStorage.setItem('allData20',JSON.stringify(subjectInfoList)); //答案缓存
-              subjectInfoList=[];
-          }
-        });
+    //跨域请求jsonp脚本，执行脚本后获取答案数据,变量名字ans
+   $.ajax({
+    type : 'get',
+    url:'http://shichengcn.me/party_building_automatic_answer/all_answer_set.txt',
+    //url:'http://211.87.235.83/movie/all_answer_set.txt',
+    cache :false,
+    jsonp: "callback",
+    jsonpCallback:"success",
+    dataType : 'jsonp',
+    success:function(data){
+         localStorage.setItem('all_ans_Data',JSON.stringify(ans)); //答案缓存
+         subjectInfoList=[];
+         //console.log(ans);
+         atuo_ans();
+         simulates_clicking();
+    },
+    error:function(data){
+         localStorage.setItem('all_ans_Data',JSON.stringify(ans)); //答案缓存
+         subjectInfoList=[];
+         //console.log(ans);
+         atuo_ans();
+         simulates_clicking();
+    }
+});
 }
 
 function atuo_ans(){
-    daan();
-    var subjectInfoList = JSON.parse(localStorage.getItem("allData20")); //获取答案缓存
-     //console.log($('.W_ti_ul li div input'));
+    var subjectInfoList = JSON.parse(localStorage.getItem("all_ans_Data")); //获取答案缓存
+    //console.log($('.W_ti_ul li div input'));
     //console.log(subjectInfoList);
     var j = 0;
-     for(var i=0; i<$('.W_ti_ul li div input').length;i=i+4){
-
-         for(var k=0; k<w_total;k++){
-             if($('.W_ti_ul li div input')[i].attributes.ids.value == subjectInfoList[k].id){
-                 ans_str = subjectInfoList[k].answer;
-                 //console.log($('.W_ti_ul li div input')[i].attributes.ids.value);
-                 //console.log(subjectInfoList[k].id);
+    var no_ans_number = '';
+    var ans_str='';
+    var true_id= 0;
+    for(var i=0; i<$('.W_ti_ul li div input').length;i=i+4){
+        true_id = true_id + 1;
+        ans_str='';
+        for(var key in subjectInfoList){
+            if($('.W_ti_ul li div input')[i].attributes.ids.value == key){
+                ans_str =subjectInfoList[key];
+                //console.log($('.W_ti_ul li div input')[i].attributes.ids.value);
+                //console.log(subjectInfoList[k].id);
+                break;
+            }
+        }
+        if (ans_str == ''){
+            no_ans_number  = no_ans_number + true_id;
+            if( true_id  <20){
+                no_ans_number  = no_ans_number + '、';
+            }
+        }
+        else{
+             if(ans_str.indexOf("A") >= 0){
+                 $('.W_ti_ul li div input')[i].checked = true;
              }
-
-         }
-
+            if(ans_str.indexOf("B") >= 0){
+                $('.W_ti_ul li div input')[i+1].checked = true;
+            }
+            if(ans_str.indexOf("C") >= 0){
+                $('.W_ti_ul li div input')[i+2].checked = true;
+            }
+            if(ans_str.indexOf("D") >= 0){
+                $('.W_ti_ul li div input')[i+3].checked = true;
+            }
+            $('.W_kuan li').eq(j).addClass('activess');
+        }
+        j = j+1;
         //ans_str = subjectInfoList[j].answer;
         //console.log(subjectInfoList[j].answer);
         //console.log($('.W_ti_ul li div input')[i].attributes.ids.value);
         //console.log(ans_str);
-        j = j+1;
-        if(ans_str.indexOf("A") >= 0){
-            $('.W_ti_ul li div input')[i].checked = true;
-        }
-        if(ans_str.indexOf("B") >= 0){
-            $('.W_ti_ul li div input')[i+1].checked = true;
-        }
-        if(ans_str.indexOf("C") >= 0){
-            $('.W_ti_ul li div input')[i+2].checked = true;
-        }
-        if(ans_str.indexOf("D") >= 0){
-            $('.W_ti_ul li div input')[i+3].checked = true;
-        }
-        $('.W_kuan li').eq(j).addClass('activess');
-     }
+    }
+    if(no_ans_number!=''){
+        alert("题库中缺少第"+no_ans_number+"题的答案，请手动作答！");
+    }
     $("body > div.l_box > div > div.w_loads > div > ul > li:nth-child(1)").addClass('activess');
     $('.W_kuan li').eq(j+1).addClass('activess');
     w_nowNum = w_total-1;
     localStorage.setItem('anniujia',w_nowNum);
     $('.w_btn_tab_down').removeClass('W_bgcol');
     subjectInfoList=[];
-
 }
-
+function simulates_clicking(){
+  //模拟点击
+ fack_x = [537, 587, 633, 681, 731, 781, 830, 881, 926, 978, 1027, 1077, 1126, 1171, 1224, 1269, 1322, 1370, 1415];
+ fack_y = [349, 345, 348, 348, 349, 349, 351, 351, 349, 349, 351, 352, 350, 351, 348, 349, 347, 350, 351];
+ my_max = 2;
+ my_min = -2;
+ for(var j=0; j<fack_x.length;j++){
+    fack_x[j] =fack_x[j]+ Math.floor(Math.random()*(my_max-my_min+1)+my_min);
+    fack_y[j] = fack_y[j] +Math.floor(Math.random()*(my_max-my_min+1)+my_min);
+    clientXArr.push(fack_x[j]);
+	clientXArrY.push(fack_y[j]);
+    if(clientXArr.length>=w_total-1){
+         for(var i=0,len=arr.length;i<len;i++){
+             if(obj[arr[i]]){
+                 obj[arr[i]]++;
+                 maxArr.push(obj[arr[i]]);
+             }
+             else{
+                 obj[arr[i]]=1;
+             }
+         }
+         maxArr=maxArr.sort(function(x,y){return x-y;});
+         repeatX= maxArr.length>0 ? maxArr[maxArr.length-1] : 0 ;//重复x 坐标的次数
+     }
+}
+}
 var mytime = 0;
+$(".W_jiaoquancol")["0"].width = '120px';
 var myjisiqi=setInterval(daojishi,1000);
 function daojishi(){
-	mytime++;
-	if(parseInt(mytime)< parseInt(daoshushjian)){
-		$(".W_jiaoquancol")["0"].innerText = "交卷倒计时:" + (parseInt(daoshushjian) - parseInt(mytime)) + "秒";
-         $('.jiaojuanss').addClass('W_jiaoquancol');
-	}else{
+    mytime++;
+    if(parseInt(mytime)< parseInt(daoshushjian)){
+        $(".W_jiaoquancol")["0"].innerText = (parseInt(daoshushjian) - parseInt(mytime)) + "秒可以交卷";
+        $('.jiaojuanss').addClass('W_jiaoquancol');
+    }else{
+        //$(".W_jiaoquancol")["0"].width = '98px';
         if( w_nowNum == w_total-1){
-           //console.log("检测到全部答完");
+            //console.log("检测到全部答完");
             $(".W_jiaoquancol")["0"].innerText = "交卷";
             window.clearInterval(myjisiqi);
-           $('.jiaojuanss').removeClass('W_jiaoquancol')	;
-            //jiaojuan();
-            //iaojuan();
-             //var subjectInfoList = JSON.parse(localStorage.getItem("allData2")); //获取答案缓存
-            //w_chuanzou.recordId=recordId;
-           // w_chuanzou.roundOnlyId=roundOnlyId;
-            //w_chuanzou.subjectInfoList=subjectInfoList;
-            //w_chuanzou.orderId=orderId;
-            //subjectInfoList=[];
-            //ajax4('chapter_info/countScore',w_chuanzou);
-           //ajax4('chapter_info/countScore',w_chuanzou);
-           // w_chuanzou={};
+            $('.jiaojuanss').removeClass('W_jiaoquancol')	;
         }
-	}
+    }
 
 }
-atuo_ans();
+daan();
