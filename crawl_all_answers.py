@@ -70,12 +70,14 @@ def lookBackSubject(roundOnlyId):
     return ans_data['data']['dateList']
 def save_txt(txtString,txtFile):
     with open(txtFile, 'w') as f:
+        txtString = 'var ans = '+ txtString + ';'
         f.write(txtString)
         f.close()
 def read_txt(txtFile):
     if os.path.exists(txtFile):
         f = open(txtFile)
         txtString = f.read()
+        txtString = txtString.replace('var ans =', '').replace(';', '')
         f.close()
         return txtString
     else:
@@ -84,7 +86,7 @@ if __name__ == '__main__':
     # 保存答案的字典
     ans_base_dist = {}
     # 答案的保存路径
-    txt_path = '/home/shicheng/all_answer_set.txt'
+    txt_path = 'all_answer_set.txt'
 
     # 获取之前保存的题目
     txtString = read_txt(txt_path)
@@ -116,5 +118,5 @@ if __name__ == '__main__':
         time.sleep(10)
     print "新版答案库长度：",len(ans_base_dist)
     txtString = json.dumps(ans_base_dist)
-    print txtString
     save_txt(txtString, txt_path)
+    print txtString
