@@ -123,21 +123,16 @@ function simulates_clicking(){
 }
 }
 var mytime = 0;
-$(".W_jiaoquancol")["0"].width = '120px';
 var myjisiqi=setInterval(daojishi,1000);
 function daojishi(){
     mytime++;
     if(parseInt(mytime)< parseInt(daoshushjian)){
         $(".W_jiaoquancol")["0"].innerText = (parseInt(daoshushjian) - parseInt(mytime)) + "秒可以交卷";
         $('.jiaojuanss').addClass('W_jiaoquancol');
-    }else{
-        //$(".W_jiaoquancol")["0"].width = '98px';
-        if( w_nowNum == w_total-1){
+    }else{  
             //console.log("检测到全部答完");
             $(".W_jiaoquancol")["0"].innerText = "交卷";
             window.clearInterval(myjisiqi);
-            $('.jiaojuanss').removeClass('W_jiaoquancol')	;
-        }
     }
 
 }
