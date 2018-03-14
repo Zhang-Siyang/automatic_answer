@@ -11,7 +11,7 @@
 // @modified       03/13/2018
 // ==/UserScript==
 
-var daoshushjian = 180;
+var daoshushjian = 30;
 
 function daan(){
     //跨域请求jsonp脚本，执行脚本后获取答案数据,变量名字ans
@@ -98,15 +98,15 @@ function atuo_ans(){
 }
 function simulates_clicking(){
   //模拟点击
- fack_x = [537, 587, 633, 681, 731, 781, 830, 881, 926, 978, 1027, 1077, 1126, 1171, 1224, 1269, 1322, 1370, 1415];
- fack_y = [349, 345, 348, 348, 349, 349, 351, 351, 349, 349, 351, 352, 350, 351, 348, 349, 347, 350, 351];
+ fake_x = [537, 587, 633, 681, 731, 781, 830, 881, 926, 978, 1027, 1077, 1126, 1171, 1224, 1269, 1322, 1370, 1415];
+ fake_y = [349, 345, 348, 348, 349, 349, 351, 351, 349, 349, 351, 352, 350, 351, 348, 349, 347, 350, 351];
  my_max = 2;
  my_min = -2;
- for(var j=0; j<fack_x.length;j++){
-    fack_x[j] =fack_x[j]+ Math.floor(Math.random()*(my_max-my_min+1)+my_min);
-    fack_y[j] = fack_y[j] +Math.floor(Math.random()*(my_max-my_min+1)+my_min);
-    clientXArr.push(fack_x[j]);
-	clientXArrY.push(fack_y[j]);
+ for(var j=0; j< fake_x.length;j++){
+    fake_x[j] = fake_x[j]+ Math.floor(Math.random()*(my_max-my_min+1)+my_min);
+    fake_y[j] =  fake_y[j] +Math.floor(Math.random()*(my_max-my_min+1)+my_min);
+    clientXArr.push(fake_x[j]);
+	clientXArrY.push(fake_y[j]);
     if(clientXArr.length>=w_total-1){
          for(var i=0,len=arr.length;i<len;i++){
              if(obj[arr[i]]){
@@ -124,15 +124,16 @@ function simulates_clicking(){
 }
 var mytime = 0;
 var myjisiqi=setInterval(daojishi,1000);
+$('.jiaojuanss').addClass('W_jiaoquancol');
 function daojishi(){
     mytime++;
     if(parseInt(mytime)< parseInt(daoshushjian)){
         $(".W_jiaoquancol")["0"].innerText = (parseInt(daoshushjian) - parseInt(mytime)) + "秒可以交卷";
-        $('.jiaojuanss').addClass('W_jiaoquancol');
-    }else{  
+    }else{
             //console.log("检测到全部答完");
             $(".W_jiaoquancol")["0"].innerText = "交卷";
             window.clearInterval(myjisiqi);
+           $('.jiaojuanss').removeClass('W_jiaoquancol')	;
     }
 
 }
