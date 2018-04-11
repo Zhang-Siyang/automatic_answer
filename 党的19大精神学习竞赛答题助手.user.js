@@ -3,7 +3,7 @@
 // @author         石成
 // @match          *xxjs.dtdjzx.gov.cn/kaishijingsai*
 // @namespace      https://github.com/shichengcn/automatic_answer
-// @version        0.2
+// @version        0.4
 // @description    [答题助手][自动答题]
 // @license        MIT
 // @supportURL     https://github.com/shichengcn/automatic_answer/issues
@@ -11,14 +11,13 @@
 // @modified       03/13/2018
 // ==/UserScript==
 
-var daoshushjian = 30;
+var daoshushjian = 0;
 
 function daan(){
     //跨域请求jsonp脚本，执行脚本后获取答案数据,变量名字ans
    $.ajax({
     type : 'get',
     url:'http://shichengcn.me/party_building_automatic_answer/all_answer_set.txt',
-    //url:'http://211.87.235.83/movie/all_answer_set.txt',
     cache :false,
     jsonp: "callback",
     jsonpCallback:"success",
@@ -98,8 +97,8 @@ function atuo_ans(){
 }
 function simulates_clicking(){
   //模拟点击
- fake_x = [537, 587, 633, 681, 731, 781, 830, 881, 926, 978, 1027, 1077, 1126, 1171, 1224, 1269, 1322, 1370, 1415];
- fake_y = [349, 345, 348, 348, 349, 349, 351, 351, 349, 349, 351, 352, 350, 351, 348, 349, 347, 350, 351];
+ fake_x = [534,583,632,680,728,781,829,878,930,974,1025,1074,1122,1172,1223,1271,1320,1370,1419];
+ fake_y = [467,468,468,467,469,465,468,465,467,468,468,467,467,468,468,467,467,467,470];
  my_max = 2;
  my_min = -2;
  for(var j=0; j< fake_x.length;j++){
