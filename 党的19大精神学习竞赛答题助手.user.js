@@ -11,7 +11,7 @@
 // @modified       03/13/2018
 // ==/UserScript==
 
-var daoshushjian = 0;
+var daoshushjian = 60;
 
 function daan(){
     //跨域请求jsonp脚本，执行脚本后获取答案数据,变量名字ans
